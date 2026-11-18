@@ -20,7 +20,7 @@ A native Android WebView wrapper is in `android-app/`. It loads the same game as
 gradle --no-daemon -p android-app assembleDebug
 ```
 
-The APK is written to `android-app/app/build/outputs/apk/debug/app-debug.apk`. GitHub Actions also builds and uploads `raasta6-android-debug` for this branch.
+The APK is written to `android-app/app/build/outputs/apk/debug/app-debug.apk`. GitHub Actions builds the APK, uploads the `raasta6-android-debug` artifact, and publishes a directly downloadable copy at `downloads/raasta6-debug.apk` on this branch.
 
 ## Controls
 

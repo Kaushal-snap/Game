@@ -7,7 +7,7 @@ on:
       - arena/2d8682d3-game
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   debug-apk:
@@ -47,10 +47,26 @@ jobs:
       - name: Build debug APK
         run: gradle --no-daemon -p android-app assembleDebug
 
-      - name: Upload APK
+      - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: raasta6-android-debug
           path: android-app/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 14
+
+      - name: Publish APK for direct download
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p downloads
+          cp android-app/app/build/outputs/apk/debug/app-debug.apk downloads/raasta6-debug.apk
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add downloads/raasta6-debug.apk
+          if git diff --cached --quiet; then
+            echo "APK is unchanged; no repository update needed."
+          else
+            git commit -m "Publish Android debug APK"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
