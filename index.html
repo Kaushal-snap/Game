@@ -2,73 +2,75 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-  <meta name="theme-color" content="#15251e" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#17231c" />
   <title>RAASTA 6 — Devgarh District</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <main class="game-shell" aria-label="Raasta 6 game prototype">
-    <canvas id="world" aria-label="Devgarh District game world"></canvas>
-    <div class="vignette"></div>
+  <main class="game-shell">
+    <canvas id="world" aria-label="Three-dimensional Devgarh village game"></canvas>
+    <div class="screen-shade"></div>
 
-    <header class="topbar">
-      <a class="brand" href="#" aria-label="Raasta 6 home">
-        <span class="brand-mark"><i></i><i></i><i></i></span>
-        <span class="brand-type"><strong>RAASTA <b>6</b></strong><small>DEVGARH DISTRICT</small></span>
-      </a>
-      <div class="top-center">
-        <span class="chapter-kicker"><span class="live-dot"></span> CHAPTER 01 <span class="slash">/</span> THE WAY BACK</span>
-        <span class="location-name" id="locationName">Kheda · Family farm</span>
+    <header class="hud-top">
+      <div class="brand-lockup">
+        <span class="brand-emblem"><i></i><i></i><i></i></span>
+        <span><b>RAASTA <em>6</em></b><small>DEVGARH DISTRICT</small></span>
       </div>
-      <div class="top-actions">
-        <button class="icon-button" id="soundButton" aria-label="Audio placeholder" title="Audio placeholder"><svg viewBox="0 0 24 24"><path d="M4 10v4h4l5 4V6l-5 4H4Z"/><path d="M17 9a5 5 0 0 1 0 6M19 6a9 9 0 0 1 0 12"/></svg></button>
-        <button class="lang-button" id="langButton" title="Switch language">HI <span>⌄</span></button>
-        <button class="avatar" aria-label="Player profile">A</button>
+      <div class="world-location"><span class="live-dot"></span><b>KHEDA VILLAGE</b><small id="locationText">FAMILY FARM · OUTSKIRTS</small></div>
+      <div class="top-stats">
+        <div class="weather-block"><span class="sun">☀</span><span><b id="clockText">08:24</b><small id="weatherText">CLEAR · 26°</small></span></div>
+        <div class="wallet-block"><span class="rupee">₹</span><span><b id="moneyText">1,250</b><small>WALLET</small></span></div>
+        <button id="qualityButton" class="quality-button" title="Change graphics quality"><i></i><span>HIGH</span></button>
       </div>
     </header>
 
-    <section class="status-row" aria-label="Game status">
-      <div class="status-card day-card"><span class="sun-icon" id="weatherIcon">☀</span><div><b id="timeText">08:24</b><small id="weatherText">CLEAR · 26°</small></div><span class="status-divider"></span><div class="day-count"><b id="dayText">DAY 01</b><small>MONSOON SEASON</small></div></div>
-      <div class="status-card money-card"><span class="coin">₹</span><div><b id="moneyText">₹ 1,250</b><small>WALLET</small></div><span class="money-change" id="moneyChange"></span></div>
-    </section>
-
-    <aside class="mission-card" id="missionCard">
-      <div class="mission-heading"><span class="mission-icon"><svg viewBox="0 0 24 24"><path d="M12 21s7-4.35 7-11a7 7 0 1 0-14 0c0 6.65 7 11 7 11Z"/><circle cx="12" cy="10" r="2.4"/></svg></span><span class="eyebrow">CURRENT TASK <i></i></span><button id="collapseMission" aria-label="Collapse mission">−</button></div>
-      <h1 id="missionTitle">A little groundwork</h1>
-      <p id="missionDescription">Get the farm ready for its first sowing. The old plots need a fresh start.</p>
-      <div class="mission-progress"><span><i id="progressFill"></i></span><small id="progressText">0 / 3</small></div>
-      <div class="mission-footer"><span class="reward-icon">✦</span><span id="rewardText">REWARD <b>+₹ 400</b></span><button id="trackButton">TRACK <span>↗</span></button></div>
+    <aside class="quest-panel" id="questPanel">
+      <div class="panel-kicker"><span class="quest-symbol">⌖</span><span id="questKicker">CHAPTER 01 · MAIN STORY</span><button id="questCollapse" aria-label="Collapse objective">−</button></div>
+      <h1 id="questTitle">A little groundwork</h1>
+      <p id="questDescription">Pick up mustard seeds in the village, then prepare a field for sowing.</p>
+      <div class="quest-target"><span class="target-dot"></span><span id="targetText">VILLAGE SHOP</span><span id="targetDistance">— m</span></div>
+      <div class="quest-progress"><span><i id="questProgress"></i></span><small id="questCount">0 / 3</small></div>
+      <div class="quest-reward"><span>✦</span> FIRST HARVEST <b>+₹400</b></div>
     </aside>
 
-    <section class="map-card" id="mapCard" aria-label="Map">
-      <div class="map-top"><span class="eyebrow">DEVGARH <b>•</b> KHEDA</span><button id="mapExpand" aria-label="Expand map">↗</button></div>
-      <div class="mini-map" id="miniMap"><canvas id="mapCanvas" width="220" height="142"></canvas><span class="map-north">N</span></div>
-      <div class="map-legend"><span><i class="legend-player"></i> YOU</span><span><i class="legend-task"></i> OBJECTIVE</span></div>
-    </section>
+    <div class="compass" aria-label="Compass"><span class="compass-n">N</span><div class="compass-track"><i class="compass-tick"></i><i></i><i class="compass-tick"></i><i></i><i class="compass-tick"></i></div><span id="compassHeading">N</span></div>
 
-    <div class="objective-pill" id="objectivePill"><span class="objective-pin">⌖</span><span id="objectiveText">Farm plots · 42 m</span><span class="objective-arrow">↗</span></div>
-
-    <div class="interaction-toast" id="interactionToast" aria-live="polite"><span class="toast-key">E</span><span id="interactionText">Interact</span></div>
+    <div class="interaction-prompt" id="interactionPrompt"><kbd>E</kbd><span id="interactionLabel">Interact</span></div>
     <div class="toast-stack" id="toastStack" aria-live="polite"></div>
 
-    <footer class="bottom-ui">
-      <div class="character-hud"><div class="character-avatar"><span></span></div><div class="character-meta"><b>ARJUN</b><small><i></i> FARMER'S SON</small><div class="health-bar"><span></span></div></div><div class="level-badge">01</div></div>
-      <div class="controls-hint"><span class="keycap">W</span><span class="keycap">A</span><span class="keycap">S</span><span class="keycap">D</span><small>MOVE</small><span class="hint-divider"></span><span class="keycap key-e">E</span><small>INTERACT</small></div>
-      <div class="quick-actions"><button class="quick-button" id="inventoryButton"><span class="quick-icon">▤</span><span>INVENTORY</span><kbd>I</kbd></button><button class="quick-button" id="journalButton"><span class="quick-icon">◷</span><span>JOURNAL</span><kbd>J</kbd></button><button class="quick-button wait-button" id="waitButton"><span class="quick-icon">◴</span><span>REST / NEXT DAY</span><kbd>R</kbd></button></div>
+    <footer class="hud-bottom">
+      <div class="player-card">
+        <div class="player-badge"><span class="badge-hair"></span><span class="badge-face"></span><span class="badge-shirt"></span></div>
+        <div class="player-data"><b>ARJUN</b><small><i></i> HOME AGAIN</small><span class="stamina-bar"><i></i></span></div>
+        <span class="level">01</span>
+      </div>
+      <div class="desktop-controls"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd><span>MOVE</span><kbd class="key-run">SHIFT</kbd><span>RUN</span><kbd class="key-use">E</kbd><span>USE</span><small>DRAG TO LOOK</small></div>
+      <div class="action-bar">
+        <button class="action-button" id="bagButton"><span class="action-glyph">▤</span><b>BAG</b><kbd>I</kbd></button>
+        <button class="action-button" id="journalButton"><span class="action-glyph">◷</span><b>JOURNAL</b><kbd>J</kbd></button>
+        <button class="action-button rest-action" id="restButton"><span class="action-glyph">◴</span><b>REST</b><kbd>R</kbd></button>
+      </div>
     </footer>
 
-    <div class="touch-controls" aria-label="Touch controls">
-      <div class="joystick" id="joystick"><div class="joy-ring"></div><div class="joy-knob" id="joyKnob"></div></div>
-      <button class="touch-action" id="touchInteract">E</button>
+    <div class="touch-hud">
+      <div class="touch-stick" id="touchStick"><div class="stick-disc"></div><div class="stick-knob" id="stickKnob"></div></div>
       <button class="touch-run" id="touchRun">RUN</button>
+      <button class="touch-use" id="touchUse">E</button>
+      <div class="look-hint">DRAG TO LOOK</div>
     </div>
 
-    <div class="modal-backdrop" id="modalBackdrop" hidden>
-      <section class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><button class="modal-close" id="modalClose" aria-label="Close">×</button><span class="eyebrow" id="modalEyebrow">DEVGARH DISTRICT</span><h2 id="modalTitle">Inventory</h2><div id="modalContent"></div></section>
+    <div class="modal-shade" id="modalShade" hidden>
+      <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <button class="modal-close" id="modalClose" aria-label="Close">×</button>
+        <span class="modal-kicker" id="modalKicker">DEVGARH DISTRICT</span>
+        <h2 id="modalTitle">Village shop</h2>
+        <div id="modalBody"></div>
+      </section>
     </div>
-    <div class="save-indicator" id="saveIndicator"><span>✓</span> GAME SAVED</div>
+    <div class="boot-screen" id="bootScreen"><div class="boot-logo">RAASTA <em>6</em></div><div class="boot-line"><i></i></div><p>LOADING DEVGARH DISTRICT</p><small>OPTIMISING FOR YOUR DEVICE</small></div>
+    <div class="webgl-fallback" id="webglFallback" hidden>WebGL isn’t available in this browser. Try Chrome on a recent Android phone with hardware acceleration enabled.</div>
   </main>
-  <script src="game.js"></script>
+  <script type="module" src="/game.js"></script>
 </body>
 </html>

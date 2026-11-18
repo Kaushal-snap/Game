@@ -29,9 +29,7 @@ dependencies {
 }
 
 tasks.register('syncWebAssets', Sync) {
-    from(rootProject.projectDir.parentFile) {
-        include 'index.html', 'game.js', 'styles.css'
-    }
+    from(new File(rootProject.projectDir.parentFile, 'dist'))
     into layout.buildDirectory.dir('generated/web-assets/www')
 }
 

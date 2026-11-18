@@ -1,41 +1,32 @@
 # RAASTA 6 — Devgarh District
 
-A small, browser-playable vertical-slice prototype inspired by the supplied **RAASTA 6: Open World India** design brief. It focuses on a compact Kheda farm loop rather than attempting the full open world: move around the village, buy seeds, prepare a plot, sow, advance time, harvest, and sell at the mandi. The player look is a lightweight in-game interpretation of the supplied character reference (not a 3D scan or production character asset).
+A small **3D third-person Android/WebGL vertical slice** for the fictional Devgarh District. This is an original Indian village/farm game concept—not a recreation of GTA characters, maps, missions, branding, or assets. The supplied front portrait is cropped and used as a face texture on Arjun’s 3D head; the body, clothes, animation, and village are procedural prototype assets, not a scanned/production character model.
 
-## Run
-
-This is a dependency-free web prototype. From the repository root:
+## Play the browser build
 
 ```bash
-python3 -m http.server 4173 --bind 0.0.0.0
+npm ci
+npm run dev
 ```
 
-Then open `http://localhost:4173` (or the forwarded preview URL).
-
-## Android APK
-
-A native Android WebView wrapper is in `android-app/`. It loads the same game assets locally and does not require network access or permissions. To build a debug APK with Android SDK 35 and Java 17 installed:
-
-```bash
-gradle --no-daemon -p android-app assembleDebug
-```
-
-The APK is written to `android-app/app/build/outputs/apk/debug/app-debug.apk`. GitHub Actions builds the APK, uploads the `raasta6-android-debug` artifact, and publishes a directly downloadable copy at `downloads/raasta6-debug.apk` on this branch.
+Open the forwarded preview URL (the development server binds to `0.0.0.0:4173`). The release/offline bundle is generated in `dist/` with `npm run build`.
 
 ## Controls
 
-- **WASD / arrow keys:** move
+- **WASD / arrow keys:** move relative to the follow camera
 - **Shift:** run
-- **E / Enter:** interact with the nearby shop, plot, mandi, home, or farm board
-- **R:** rest and advance one day
-- **I:** inventory · **J:** journal · **Esc:** close a panel / save
-- On narrow touch screens, use the on-screen joystick, Run, and E buttons.
+- **Drag:** rotate the third-person camera
+- **E / Enter:** interact with the nearby shop, fields, mandi, or farmhouse
+- **R:** rest and advance a day · **I:** bag · **J:** journal · **Esc:** save/close
+- Touch screens: left virtual stick, drag the world to look, and use the Run/E buttons.
+- Tap **HIGH** to cycle Balanced, High, and Ultra render settings. The best stable setting varies by phone and heat.
 
-## Prototype loop
+## First farm loop
 
-1. Visit the general store and buy a mustard seed packet.
-2. Plough the north plot, then sow the mustard.
-3. Rest through two days to grow the crop.
-4. Harvest and sell it at the mandi for ₹400.
+Buy mustard seeds at the general store, plough and sow the north field, rest through two days, harvest, then sell the crop at the mandi. State is saved locally and the game runs without a network connection.
 
-Progress and player position are saved locally in the browser. This is an early gameplay mock-up, not a Unity build; the illustration, character, and world are canvas-drawn placeholders. There are no third-party game assets or network requirements.
+## Android APK
+
+The Android WebView wrapper loads the local bundled WebGL game offline. A debug APK is produced by the `Build Android APK` GitHub Actions workflow after each push to an `arena/*` branch. The workflow publishes it at `downloads/raasta6-debug.apk` and also uploads a 14-day Actions artifact. Install the APK on Android and allow installs from the source you downloaded it with if prompted.
+
+The renderer uses PBR-style materials, shadows, a day/night light cycle, instanced vegetation, and scalable resolution/shadow settings. **Ultra is a best-effort preset, not a promise of console-level graphics or stable frame rate on every Android device.** Profile the APK on the target phone before adding larger maps or more simulation systems.
