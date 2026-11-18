@@ -1,0 +1,7 @@
+# Android / Gradle build outputs
+.gradle/
+**/build/
+local.properties
+
+# Downloadable debug build artifact (kept outside Git)
+/Raasta6-debug.apk
